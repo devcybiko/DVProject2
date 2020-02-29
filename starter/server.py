@@ -25,15 +25,20 @@ theDataForSalaries = [
 def the_Weekly_Data_Method():
     return jsonify(someWeeklyPerformanceData)
 
+### another potential API
 @app.route("/api/salarydata")
 def the_Method_for_some_Salary_Data():
     return jsonify(theDataForSalaries)
 
+### the 'home' route. 
+### NOTE: This allows sending data to the HTML through templating
+## But you'll likely not need it since most of what you're doing is AJAX APIs
 @app.route("/")
 def home():
     message = "Hello, World"
     return render_template('index.html', message=message)
 
 
+### A required way of saying "Start the server"
 if __name__ == "__main__":
     app.run(debug=True)
