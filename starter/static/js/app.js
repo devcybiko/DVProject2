@@ -1,13 +1,13 @@
 // this function is run when the page loads
 function main() {
     console.log("Beginning main()");
-    weeklyChart();
-    salaryTable();
+    weeklyChart(); // draw the weeklyChart
+    salaryTable(); // draw the salaryTable
 }
 
 // this function plots a chart of weekly data (called from main, above)
 function weeklyChart() {
-    d3.json("/api/weeklydata").then(rows => {
+    d3.json("/api/weeklydata").then(rows => { // call the server.py api for weeklydata
         console.log(rows);
         let data = sqlToTrace(rows, "day", "value");
         let options = { margin: { t: 0 } };
@@ -17,7 +17,7 @@ function weeklyChart() {
 
 // this function plots a table of salary data (called from main, above)
 function salaryTable() {
-    d3.json("/api/salarydata").then(rows => {
+    d3.json("/api/salarydata").then(rows => { // call the server.py api for salarydata
         let tableData = [{
             type: 'table',
             header: {
@@ -42,9 +42,10 @@ function salaryTable() {
 
 // this is a utility function that rearranges the data from a SQL resultSet to x/y traces
 // rows=data from sql
-//   [{"age": 25, "name": "Willy"}, {"age": 57, "name", 
-// xname=the name of the x data,
-// yname = the name of the y data
+//   [{"age": 25, "name": "Willy"}, {"age": 57, "name": "Greg"}]
+// xname=the name of the x data, ("name")
+// yname = the name of the y data ("age")
+// results: { x:["Willy", "Greg"], y:[25, 57] }
 // NOTE: You can call this multiple times to create multiple traces
 function sqlToTrace(rows, xname, yname) {  
     let x = [];
@@ -58,8 +59,10 @@ function sqlToTrace(rows, xname, yname) {
 
 // this is a utility function that rearranges the data from a SQL resultSet tabular datas
 // rows=data from sql, 
+//   [{"age": 25, "name": "Willy"}, {"age": 57, "name": "Greg"}]
 // returns a single row of HEADINGS
 // and each subsequent row
+//  results: [ ["name", "age"], ["Willy", 25], ["Greg", 57] ]
 
 function sqlToTable(rows) {
     let header = [];
@@ -73,7 +76,5 @@ function sqlToTable(rows) {
     }
     return body;
 }
-
-
 
 main(); // initialize the page
