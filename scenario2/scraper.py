@@ -8,8 +8,11 @@ def scrapeURL(url):
     res = requests.get(url)
     html_page = res.content
     soup = bs(html_page, 'html.parser')
-    text = soup.find('div', {'class': 'body-content'})
-    return text.text if text else ''
+    body = soup.find('div', {'class': 'body-content'})
+    if body:
+        byline = body.parent.find('p', {'class': 'by-line'}).text
+        return {'url': url, 'text':body.text, 'byline':byline}
+    return ''
 
 
 def scrape_rss_feed(url):
@@ -19,10 +22,6 @@ def scrape_rss_feed(url):
     parent_map = {c:p for p in xmldoc.iter() for c in p}
     for item in xmldoc.iterfind('.//link'):
         print(item.text)
-        div = parent_map
-        print(div)
-        byline = div.find('.//span')
-        print(byline)
 
         slashes = item.text.split('/')
         if (len(slashes) > 4) : links.append(item.text)
@@ -36,4 +35,3 @@ for link in links:
     text = scrapeURL(link)
     print(text)
     print('-----------')
-    break
