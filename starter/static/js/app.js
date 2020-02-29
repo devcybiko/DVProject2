@@ -5,16 +5,17 @@ function main() {
     salaryTable();
 }
 
+// this function plots a chart of weekly data (called from main, above)
 function weeklyChart() {
     d3.json("/api/weeklydata").then(rows => {
         console.log(rows);
         let data = sqlToTrace(rows, "day", "value");
         let options = { margin: { t: 0 } };
-        let chartDiv = document.getElementById('chart');
-        Plotly.newPlot(chartDiv, [data], options); // remember - plotly wants an array of data (one per trace)
+        Plotly.newPlot("chartDiv", [data], options); // remember - plotly wants an array of data (one per trace)
     });
 }
 
+// this function plots a table of 
 function salaryTable() {
     d3.json("/api/salarydata").then(rows => {
         let tableData = [{
@@ -35,7 +36,7 @@ function salaryTable() {
             }
         }];
 
-        Plotly.newPlot('table', tableData);
+        Plotly.newPlot('tableDiv', tableData);
     });
 }
 function sqlToTrace(rows, xname, yname) {
