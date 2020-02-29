@@ -15,13 +15,10 @@ someWeeklyPerformanceData = [
 
 theDataForSalaries = [
         {'Salaries':1200000, 'Office':20000, 'Merchandise':80000, 'Legal':2000, 'Total':12120000},
-        {'Salaries':1300000, 'Office':20000, 'Merchandise':70000, 'Legal':2000, 'Total'},
-        {'Salaries', 'Office', 'Merchandise', 'Legal', 'Total'},
-        {'Salaries', 'Office', 'Merchandise', 'Legal', 'Total'},
-        [, , , ],
-        [, , , , ],
-        [1300000, 20000, 120000, 2000, 131222000],
-        [1400000, 20000, 90000, 2000, 14102000]];
+        {'Salaries':1300000, 'Office':20000, 'Merchandise':70000, 'Legal':2000, 'Total':130902000},
+        {'Salaries':1300000, 'Office':20000, 'Merchandise':120000, 'Legal':2000, 'Total':131222000},
+        {'Salaries':1400000, 'Office':20000, 'Merchandise':90000, 'Legal':2000, 'Total':14102000},
+]
 
 ### one of your APIs
 @app.route("/api/weeklydata")

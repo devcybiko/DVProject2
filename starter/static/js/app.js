@@ -8,7 +8,7 @@ function main() {
 function weeklyChart() {
     d3.json("/api/weeklydata").then(rows => {
         console.log(rows);
-        let data = sqlToPlotly(rows, "day", "value");
+        let data = sqlToTrace(rows, "day", "value");
         let options = { margin: { t: 0 } };
         let chartDiv = document.getElementById('chart');
         Plotly.newPlot(chartDiv, [data], options); // remember - plotly wants an array of data (one per trace)
@@ -16,29 +16,29 @@ function weeklyChart() {
 }
 
 function salaryTable() {
+    d3.json("/api/salarydata").then(rows => {
+        let tableData = [{
+            type: 'table',
+            header: {
+                values: [["<b>EXPENSES</b>"], ["<b>Q1</b>"],
+                ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]],
+                align: "center",
+                line: { width: 1, color: 'black' },
+                fill: { color: "grey" },
+                font: { family: "Arial", size: 12, color: "white" }
+            },
+            cells: {
+                values: sqlToTable(rows),
+                align: "center",
+                line: { color: "black", width: 1 },
+                font: { family: "Arial", size: 11, color: ["black"] }
+            }
+        }];
 
-    var data = [{
-        type: 'table',
-        header: {
-            values: [["<b>EXPENSES</b>"], ["<b>Q1</b>"],
-            ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]],
-            align: "center",
-            line: { width: 1, color: 'black' },
-            fill: { color: "grey" },
-            font: { family: "Arial", size: 12, color: "white" }
-        },
-        cells: {
-            values: values,
-            align: "center",
-            line: { color: "black", width: 1 },
-            font: { family: "Arial", size: 11, color: ["black"] }
-        }
-    }]
-
-    Plotly.newPlot('table', data);
+        Plotly.newPlot('table', tableData);
+    });
 }
-
-function sqlToPlotly(rows, xname, yname) {
+function sqlToTrace(rows, xname, yname) {
     let x = [];
     let y = [];
     for (row of rows) {
@@ -46,6 +46,18 @@ function sqlToPlotly(rows, xname, yname) {
         y.push(row[yname]);
     }
     return { x, y };
+}
+function sqlToTable(rows) {
+    let header = [];
+    let body = [];
+    for (heading in rows[0]) {// getting the object keys
+        header.push(heading);
+    }
+    body.push(header);
+    for (row of rows) {
+        body.push(Object.values(row))
+    }
+    return body;
 }
 
 
