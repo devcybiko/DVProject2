@@ -17,11 +17,10 @@ def scrape_rss_feed():
     for item in xmldoc.iterfind('.//link'):
         print(item.text)
         slashes = item.text.split('/');
-        if (slashes < 
-        links.append(item.text)
+        if (len(slashes) > 4) : links.append(item.text)
 
     # Return results
     return links
 
 links = scrape_rss_feed()
-print(links)
+print(len(links))
