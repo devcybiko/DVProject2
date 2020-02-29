@@ -19,12 +19,13 @@ def scrape_info():
     #time.sleep(1)
 
     # Scrape page into Soup
-    html = browser.html
-    soup = bs(html, "html.parser")
+    xml = browser.html
+    print(xml)
+    soup = bs(xml, "lxml")
 
     # Get the average temps
-    links = soup.findAll('link')
-    print(links[0].text)
+    links = soup.find_all('link')
+    print([ link.text for link in links ])
 
 
     # Close the browser after scraping
