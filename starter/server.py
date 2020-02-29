@@ -4,11 +4,19 @@ from flask import Flask, jsonify, render_template
 app = Flask(__name__)
 
 sampleData = [
-    {"Sunday": "
-### one of your API 
+    {"day": "Sunday", "value": 15339},
+    {"day": "Monday", "value": 21345},
+    {"day": "Tuesday", "value": 18483},
+    {"day": "Wednesday", "value": 24003},
+    {"day": "Thursday", "value": 23489},
+    {"day": "Friday", "value": 24092},
+    {"day": "Saturday", "value": 12034}
+]
+    
+### one of your APIs
 @app.route("/api/weeklydata")
 def weeklyData():
-    return jsonify(justice_league_members)
+    return jsonify(sampleData)
 
 @app.route("/")
 def home():
