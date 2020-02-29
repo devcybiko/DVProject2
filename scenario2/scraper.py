@@ -1,7 +1,8 @@
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import time
-
+from urllib.request import urlopen
+from xml.etree.ElementTree import parse
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
@@ -9,29 +10,18 @@ def init_browser():
     return Browser("chrome", **executable_path, headless=False)
 
 
-def scrape_info():
-    browser = init_browser()
-
-    # Visit visitcostarica.herokuapp.com
-    url = "https://www.nrablog.com/rss"
-    browser.visit(url)
-
-    #time.sleep(1)
-
-    # Scrape page into Soup
-    xml = browser.html
-    print(xml)
-    soup = bs(xml, "lxml")
-
-    # Get the average temps
-    links = soup.find_all('link')
-    print([ link.text for link in links ])
-
-
-    # Close the browser after scraping
-    browser.quit()
+def scrape_rss_feed():
+    links = []
+    var_url = urlopen('https://www.nrablog.com/rss')
+    xmldoc = parse(var_url)
+    for item in xmldoc.iterfind('.//link'):
+        print(item.text)
+        slashes = item.text.split('/');
+        if (slashes < 
+        links.append(item.text)
 
     # Return results
     return links
 
-scrape_info()
+links = scrape_rss_feed()
+print(links)
