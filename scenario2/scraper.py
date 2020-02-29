@@ -1,18 +1,20 @@
-from splinter import Browser
 from bs4 import BeautifulSoup as bs
+import requests
 import time
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
 
-def init_browser():
-    # @NOTE: Replace the path with your actual path to the chromedriver
-    executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
-    return Browser("chrome", **executable_path, headless=False)
+def scrapeURL(url):
+    res = requests.get(url)
+    html_page = res.content
+    soup = bs(html_page, 'html.parser')
+    text = soup.find_all('div', {'class': 'body-content'})
+    return text
 
 
-def scrape_rss_feed():
+def scrape_rss_feed(url):
     links = []
-    var_url = urlopen('https://www.nrablog.com/rss')
+    var_url = urlopen(url)
     xmldoc = parse(var_url)
     for item in xmldoc.iterfind('.//link'):
         print(item.text)
@@ -22,5 +24,7 @@ def scrape_rss_feed():
     # Return results
     return links
 
-links = scrape_rss_feed()
+links = scrape_rss_feed('https://www.nrablog.com/rss')
 print(len(links))
+text = scrapeURL(links[0])
+print(text)
