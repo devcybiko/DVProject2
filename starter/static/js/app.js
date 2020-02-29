@@ -15,7 +15,7 @@ function weeklyChart() {
     });
 }
 
-// this function plots a table of 
+// this function plots a table of salary data (called from main, above)
 function salaryTable() {
     d3.json("/api/salarydata").then(rows => {
         let tableData = [{
@@ -39,7 +39,14 @@ function salaryTable() {
         Plotly.newPlot('tableDiv', tableData);
     });
 }
-function sqlToTrace(rows, xname, yname) {
+
+// this is a utility function that rearranges the data from a SQL resultSet to x/y traces
+// rows=data from sql
+//   [{"age": 25, "name": "Willy"}, {"age": 57, "name", 
+// xname=the name of the x data,
+// yname = the name of the y data
+// NOTE: You can call this multiple times to create multiple traces
+function sqlToTrace(rows, xname, yname) {  
     let x = [];
     let y = [];
     for (row of rows) {
@@ -48,6 +55,12 @@ function sqlToTrace(rows, xname, yname) {
     }
     return { x, y };
 }
+
+// this is a utility function that rearranges the data from a SQL resultSet tabular datas
+// rows=data from sql, 
+// returns a single row of HEADINGS
+// and each subsequent row
+
 function sqlToTable(rows) {
     let header = [];
     let body = [];
