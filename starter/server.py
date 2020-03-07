@@ -75,13 +75,13 @@ def get_me_some_matches():
     global Matches, engine
     results = []
     session = Session(engine)
-    matches = session.query(Matches).all()
-    print(matches)
-    for match in matches:
+    query = session.query(Matches)
+    rows = query.statement.execute().fetchall()
+    for row in rows:
         row = dict(match)
         print(row)
         results.append(row)
-    return jsonify(results)
+    return jsonify(json_list=matches)
 
 @app.route("/api/players")
 def get_me_some_players_please():
