@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, render_template
+from sqlalchemy import create_engine
 
 ### create a flask instance
 app = Flask(__name__)
+engine = create_engine(f'postgresql://{rds_connection_string}')
 
 someWeeklyPerformanceData = [
     {"day": "Sunday", "value": 15339},
