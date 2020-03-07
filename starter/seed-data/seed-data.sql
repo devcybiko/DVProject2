@@ -4,11 +4,11 @@
 DROP TABLE IF EXISTS matches;
 CREATE TABLE matches (
     id  SERIAL PRIMARY KEY,
-    loser_age DECIMAL,
+    loser_age REAL,
     loser_id INT,
     loser_name VARCHAR(64),
     loser_rank INT,
-    winner_age DECIMAL,
+    winner_age REAL,
     winner_id INT,
     winner_name VARCHAR(64),
     winner_rank INT

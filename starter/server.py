@@ -78,15 +78,23 @@ def get_me_some_matches():
     query = session.query(Matches)
     rows = query.statement.execute().fetchall()
     for row in rows:
-        match = {row.id, 
-        results.append(dict(row))
+        match = dict(row)
+        print(match)
+        results.append(match)
     return jsonify(results)
 
 @app.route("/api/players")
 def get_me_some_players_please():
-    global Players
-    players = Players.query.all()
-    return jsonify(players)
+    global Players, engine
+    results = []
+    session = Session(engine)
+    query = session.query(Players)
+    rows = query.statement.execute().fetchall()
+    for row in rows:
+        match = dict(row)
+        print(match)
+        results.append(match)
+    return jsonify(results)
 
 ### the 'home' route. 
 ### NOTE: This allows sending data to the HTML through templating
