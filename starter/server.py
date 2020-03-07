@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, create_engine, MetaData
 from sqlalchemy.ext.automap import automap_base
 
 ### create a flask instance
@@ -12,6 +12,7 @@ PORT="5432"
 USER="postgres"
 PASSWORD="hoxan9"
 DATABASE="project2"
+SCHEMA = "public"
 
 def DatabaseConnection():
     ### Database connection
@@ -21,13 +22,14 @@ def DatabaseConnection():
     print("engine created")
 
     ### Map the engine to the Database
-    Base = automap_base()
-    print("automapped")
-    Base.prepare(engine, reflect=True)
-    print("prepared")
+    metaData = MetaData(schema=f"{SCHEMA}")
+    Base = automap_base(bind=engine, metadata=metaData)
     keys = Base.classes.keys()
     print("got base")
     print(keys)
+    print("automapped")
+    Base.prepare(engine, reflect=True)
+    print("prepared")
 
     ### Get the database tables
     Matches = Base.classes.matches
