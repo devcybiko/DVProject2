@@ -44,6 +44,7 @@ function salaryTable() {
 
 function matchesTable() {
     d3.json("/api/matches").then(rows => { // call the server.py api for salarydata
+        console.log(rows);
         let tableData = [{
             type: 'table',
             header: {
@@ -61,7 +62,7 @@ function matchesTable() {
             }
         }];
 
-        Plotly.newPlot('tableDiv', tableData);
+        Plotly.newPlot('matchesDiv', tableData);
     });
 }
 
@@ -85,7 +86,7 @@ function playersTable() {
             }
         }];
 
-        Plotly.newPlot('tableDiv', tableData);
+        Plotly.newPlot('playersDiv', tableData);
     });
 }
 

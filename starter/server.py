@@ -82,7 +82,7 @@ def get_me_some_players_please():
     global Players, engine
     results = []
     session = Session(engine)
-    query = session.query(Players)
+    query = session.query("select country_code, hand, count(first_name) as cnt from players group by country_code, hand having hand in ('L', 'R') order by cnt desc, country_code, hand")
     rows = query.statement.execute().fetchall()
     for row in rows:
         match = dict(row)
