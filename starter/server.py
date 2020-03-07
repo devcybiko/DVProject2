@@ -1,23 +1,34 @@
 from flask import Flask, jsonify, render_template
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.ext.automap import automap_base
 
 ### create a flask instance
 app = Flask(__name__)
 
-### database stuff
+### database Parameters
+HOSTNAME="localhost"
+PORT="5432"
+PASSWORD="hoxan9Postgres"
+DATABASE="project2"
+
+### Database connection
+rds_connection_string = f"postgres:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
+print(rds_connection_string)
+engine = create_engine(f'postgresql://{rds_connection_string}')
+
+### Map the engine to the Database
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 Base.classes.keys()
 
-HOSTNAME="localhost"
-PORT="5432"
-PASSWORD="hoxan9"
+### Get the database tables
+Matches = Base.classes.matches
+Players = Base.classes.players
 
-rds_connection_string = "postgres:hokxan9@localhost:5432/project2",
-engine = create_engine(f'postgresql://{rds_connection_string}')
-
+### Hard-coded data
+### Not for production/project delivery
+### Just for examples
 someWeeklyPerformanceData = [
     {"day": "Sunday", "value": 15339},
     {"day": "Monday", "value": 21345},
@@ -44,6 +55,17 @@ def the_Weekly_Data_Method():
 @app.route("/api/salarydata")
 def the_Method_for_some_Salary_Data():
     return jsonify(theDataForSalaries)
+
+### an api to get all the Matches from the database
+@app.route("/api/matches")
+def get_me_some_matches():
+    matches = Matches.query.all()
+    return jsonify(matches)
+
+@app.route("/api/players")
+def get_me_some_players_please():
+    players = Players.query.all()
+    return jsonify(players)
 
 ### the 'home' route. 
 ### NOTE: This allows sending data to the HTML through templating
