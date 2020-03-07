@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String, create_engine, MetaData
 from sqlalchemy.ext.automap import automap_base
 
@@ -14,17 +15,13 @@ PASSWORD="password"
 DATABASE="project2"
 SCHEMA = "public"
 
-Matches, Players = 0
-
 def DatabaseConnection():
     ### Database connection
-    global Matches, Players
+    global Matches, Players, engine
     rds_connection_string = f"{USER}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
     print(rds_connection_string)
     engine = create_engine(f'postgresql://{rds_connection_string}')
     print("engine created")
-    results = engine.execute("""select * from matches""")
-    print(results)
 
     ### Map the engine to the Database
     m = MetaData()
@@ -34,11 +31,11 @@ def DatabaseConnection():
     print("prepared")
     keys = Base.classes.keys()
     print("got base")
-    print(Base.metadata.tables)
+    print(Base.classes.keys())
 
     ### Get the database tables
-    Matches = Base.classes['matches']
-    Players = Base.classes['players']
+    Matches = Base.classes.matches
+    Players = Base.classes.players
     print("Connected")
 
 ### Hard-coded data
@@ -74,8 +71,10 @@ def the_Method_for_some_Salary_Data():
 ### an api to get all the Matches from the database
 @app.route("/api/matches")
 def get_me_some_matches():
-    global Matches
-    foo = Matches.query.all()
+    global Matches, engine
+    session = Session(engine)
+    foo = session.query(Matches).all()
+    print(foo[0])
     return jsonify(foo)
 
 @app.route("/api/players")
