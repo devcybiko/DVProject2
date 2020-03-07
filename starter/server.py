@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String, create_engine, MetaData
 from sqlalchemy.ext.automap import automap_base
+import json
 
 ### create a flask instance
 app = Flask(__name__)
@@ -72,10 +73,15 @@ def the_Method_for_some_Salary_Data():
 @app.route("/api/matches")
 def get_me_some_matches():
     global Matches, engine
+    results = []
     session = Session(engine)
-    foo = session.query(Matches).all()
-    print(foo[0])
-    return jsonify(foo)
+    matches = session.query(Matches).all()
+    print(matches)
+    for match in matches:
+        row = dict(match)
+        print(row)
+        results.append(row)
+    return jsonify(results)
 
 @app.route("/api/players")
 def get_me_some_players_please():
