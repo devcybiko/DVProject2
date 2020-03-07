@@ -14,3 +14,7 @@ Create a database
 * In the left sidebar, 
 * Open "PostgreSQL 12"
   * Open "Databases"
+    * Right Click on "Databases"  and select "Create -> Database", git it a name and click "Save"
+* Right click on the newly created Database and select "Query Tool..."
+* Select the "Folder" icon and navigate to your "seed-data.sql" file (or equiv)
+
