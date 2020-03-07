@@ -14,23 +14,27 @@ PASSWORD="password"
 DATABASE="project2"
 SCHEMA = "public"
 
+Matches, Players = 0
+
 def DatabaseConnection():
     ### Database connection
+    global Matches, Players
     rds_connection_string = f"{USER}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
     print(rds_connection_string)
     engine = create_engine(f'postgresql://{rds_connection_string}')
     print("engine created")
     results = engine.execute("""select * from matches""")
     print(results)
-    
+
     ### Map the engine to the Database
-    Base = automap_base()
+    m = MetaData()
+    Base = automap_base(bind=engine, metadata=m)
     print("automapped")
     Base.prepare(engine, reflect=True)
     print("prepared")
-    keys = Base.classes.keys
+    keys = Base.classes.keys()
     print("got base")
-    print(keys)
+    print(Base.metadata.tables)
 
     ### Get the database tables
     Matches = Base.classes['matches']
@@ -70,11 +74,13 @@ def the_Method_for_some_Salary_Data():
 ### an api to get all the Matches from the database
 @app.route("/api/matches")
 def get_me_some_matches():
-    matches = Matches.query.all()
-    return jsonify(matches)
+    global Matches
+    foo = Matches.query.all()
+    return jsonify(foo)
 
 @app.route("/api/players")
 def get_me_some_players_please():
+    global Players
     players = Players.query.all()
     return jsonify(players)
 

@@ -1,18 +1,22 @@
 -- Create the seed data from week 09.01 Activity 9
+-- NOTE: IMPORTANT: YOU MUST HAVE A PRIMARY KEY OR SQLALCHEMY WILL NOT WORK
+
 DROP TABLE IF EXISTS matches;
 CREATE TABLE matches (
-loser_age DECIMAL,
-loser_id INT,
-loser_name VARCHAR(64),
-loser_rank INT,
-winner_age DECIMAL,
-winner_id INT,
-winner_name VARCHAR(64),
-winner_rank INT
+    id  SERIAL PRIMARY KEY,
+    loser_age DECIMAL,
+    loser_id INT,
+    loser_name VARCHAR(64),
+    loser_rank INT,
+    winner_age DECIMAL,
+    winner_id INT,
+    winner_name VARCHAR(64),
+    winner_rank INT
 );
 
 DROP TABLE IF EXISTS players;
 CREATE TABLE players (
+    id  SERIAL PRIMARY KEY,
 	player_id INT,
 	first_name VARCHAR,
 	last_name VARCHAR,
