@@ -7,24 +7,32 @@ from sqlalchemy.ext.automap import automap_base
 app = Flask(__name__)
 
 ### database Parameters
-HOSTNAME="localhost"
+HOSTNAME="PostgreSQL 12"
 PORT="5432"
-PASSWORD="hoxan9Postgres"
+USER="postgres"
+PASSWORD="hoxan9"
 DATABASE="project2"
 
-### Database connection
-rds_connection_string = f"postgres:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
-print(rds_connection_string)
-engine = create_engine(f'postgresql://{rds_connection_string}')
+def DatabaseConnection():
+    ### Database connection
+    rds_connection_string = f"{USER}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
+    print(rds_connection_string)
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+    print("engine created")
 
-### Map the engine to the Database
-Base = automap_base()
-Base.prepare(engine, reflect=True)
-Base.classes.keys()
+    ### Map the engine to the Database
+    Base = automap_base()
+    print("automapped")
+    Base.prepare(engine, reflect=True)
+    print("prepared")
+    keys = Base.classes.keys()
+    print("got base")
+    print(keys)
 
-### Get the database tables
-Matches = Base.classes.matches
-Players = Base.classes.players
+    ### Get the database tables
+    Matches = Base.classes.matches
+    Players = Base.classes.players
+    print("Connected")
 
 ### Hard-coded data
 ### Not for production/project delivery
@@ -78,4 +86,5 @@ def home():
 
 ### A required way of saying "Start the server"
 if __name__ == "__main__":
+    DatabaseConnection()
     app.run(debug=True)
