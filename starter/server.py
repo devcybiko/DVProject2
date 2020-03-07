@@ -22,16 +22,11 @@ def DatabaseConnection():
     rds_connection_string = f"{USER}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}"
     print(rds_connection_string)
     engine = create_engine(f'postgresql://{rds_connection_string}')
-    print("engine created")
 
     ### Map the engine to the Database
-    m = MetaData()
-    Base = automap_base(bind=engine, metadata=m)
-    print("automapped")
+    Base = automap_base(bind=engine)
     Base.prepare(engine, reflect=True)
-    print("prepared")
     keys = Base.classes.keys()
-    print("got base")
     print(Base.classes.keys())
 
     ### Get the database tables
@@ -79,7 +74,6 @@ def get_me_some_matches():
     rows = query.statement.execute().fetchall()
     for row in rows:
         match = dict(row)
-        print(match)
         results.append(match)
     return jsonify(results)
 
@@ -92,7 +86,6 @@ def get_me_some_players_please():
     rows = query.statement.execute().fetchall()
     for row in rows:
         match = dict(row)
-        print(match)
         results.append(match)
     return jsonify(results)
 

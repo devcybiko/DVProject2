@@ -2,6 +2,8 @@
 function main() {
     console.log("Beginning main()");
     weeklyChart(); // draw the weeklyChart
+    matchesTable(); // draw the matches
+    playersTable(); // draw the players
     salaryTable(); // draw the salaryTable
 }
 
@@ -23,6 +25,53 @@ function salaryTable() {
             header: {
                 values: [["<b>EXPENSES</b>"], ["<b>Q1</b>"],
                 ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]],
+                align: "center",
+                line: { width: 1, color: 'black' },
+                fill: { color: "grey" },
+                font: { family: "Arial", size: 12, color: "white" }
+            },
+            cells: {
+                values: sqlToTable(rows),
+                align: "center",
+                line: { color: "black", width: 1 },
+                font: { family: "Arial", size: 11, color: ["black"] }
+            }
+        }];
+
+        Plotly.newPlot('tableDiv', tableData);
+    });
+}
+
+function matchesTable() {
+    d3.json("/api/matches").then(rows => { // call the server.py api for salarydata
+        let tableData = [{
+            type: 'table',
+            header: {
+                values: Object.keys(rows[0]),
+                align: "center",
+                line: { width: 1, color: 'black' },
+                fill: { color: "grey" },
+                font: { family: "Arial", size: 12, color: "white" }
+            },
+            cells: {
+                values: sqlToTable(rows),
+                align: "center",
+                line: { color: "black", width: 1 },
+                font: { family: "Arial", size: 11, color: ["black"] }
+            }
+        }];
+
+        Plotly.newPlot('tableDiv', tableData);
+    });
+}
+
+function playersTable() {
+    d3.json("/api/players").then(rows => { // call the server.py api for salarydata
+        console.log(rows);
+        let tableData = [{
+            type: 'table',
+            header: {
+                values: Object.keys(rows[0]),
                 align: "center",
                 line: { width: 1, color: 'black' },
                 fill: { color: "grey" },
