@@ -7,10 +7,10 @@ from sqlalchemy.ext.automap import automap_base
 app = Flask(__name__)
 
 ### database Parameters
-HOSTNAME="PostgresSQL 12"
+HOSTNAME="127.0.0.1"
 PORT="5432"
 USER="postgres"
-PASSWORD="hoxan9"
+PASSWORD="password"
 DATABASE="project2"
 SCHEMA = "public"
 
@@ -20,21 +20,21 @@ def DatabaseConnection():
     print(rds_connection_string)
     engine = create_engine(f'postgresql://{rds_connection_string}')
     print("engine created")
-
+    results = engine.execute("""select * from matches""")
+    print(results)
+    
     ### Map the engine to the Database
-    metaData = MetaData(bind=engine, schema=f"{SCHEMA}")
-    print(metaData)
-    Base = automap_base(bind=engine, metadata=metaData)
-    keys = Base.classes.keys()
-    print("got base")
-    print(keys)
+    Base = automap_base()
     print("automapped")
     Base.prepare(engine, reflect=True)
     print("prepared")
+    keys = Base.classes.keys
+    print("got base")
+    print(keys)
 
     ### Get the database tables
-    Matches = Base.classes.matches
-    Players = Base.classes.players
+    Matches = Base.classes['matches']
+    Players = Base.classes['players']
     print("Connected")
 
 ### Hard-coded data
