@@ -78,10 +78,9 @@ def get_me_some_matches():
     query = session.query(Matches)
     rows = query.statement.execute().fetchall()
     for row in rows:
-        row = dict(match)
-        print(row)
-        results.append(row)
-    return jsonify(json_list=matches)
+        match = {row.id, 
+        results.append(dict(row))
+    return jsonify(results)
 
 @app.route("/api/players")
 def get_me_some_players_please():
