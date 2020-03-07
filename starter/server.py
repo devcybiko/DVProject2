@@ -1,8 +1,16 @@
 from flask import Flask, jsonify, render_template
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 
 ### create a flask instance
 app = Flask(__name__)
+
+### database stuff
+Base = automap_base()
+Base.prepare(engine, reflect=True)
+Base.classes.keys()
+rds_connection_string = "postgres:hokxan9@localhost:5432/customer_db",
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
 someWeeklyPerformanceData = [
