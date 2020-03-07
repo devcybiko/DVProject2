@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 app = Flask(__name__)
 
 ### database Parameters
-HOSTNAME="localhost"
+HOSTNAME="PostgresSQL 12"
 PORT="5432"
 USER="postgres"
 PASSWORD="hoxan9"
