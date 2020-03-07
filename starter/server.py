@@ -10,7 +10,12 @@ app = Flask(__name__)
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 Base.classes.keys()
-rds_connection_string = "postgres:hokxan9@localhost:5432/customer_db",
+
+HOSTNAME="localhost"
+PORT="5432"
+PASSWORD="hoxan9"
+
+rds_connection_string = "postgres:hokxan9@localhost:5432/project2",
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
 someWeeklyPerformanceData = [

@@ -17,4 +17,10 @@ Create a database
     * Right Click on "Databases"  and select "Create -> Database", git it a name and click "Save"
 * Right click on the newly created Database and select "Query Tool..."
 * Select the "Folder" icon and navigate to your "seed-data.sql" file (or equiv)
+  * Double-click on the "seed-data.sql" file
+  * Click the "Run" (or Play) button (it's the right-pointing triangle)
+* In the Sidbar, navigate to your Database, Right-click, select "Refresh"
+  * Drill down to Your-Database->Schemas->Tables and verify your tables are there
+  * Right click on a Table and select "View/Edit Data" and select "First 100 Rows"
+  * You should see your data in the table
 

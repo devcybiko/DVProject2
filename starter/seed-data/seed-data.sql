@@ -1,12 +1,11 @@
 -- Create the seed data from week 09.01 Activity 9
-DROP TABLE IF EXISTS matches
-
-CREATE TABLE matches
-loser_age NUMBER,
+DROP TABLE IF EXISTS matches;
+CREATE TABLE matches (
+loser_age DECIMAL,
 loser_id INT,
 loser_name VARCHAR(64),
 loser_rank INT,
-winner_age NUMBER,
+winner_age DECIMAL,
 winner_id INT,
 winner_name VARCHAR(64),
 winner_rank INT
