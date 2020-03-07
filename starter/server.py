@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 app = Flask(__name__)
 
 ### database Parameters
-HOSTNAME="PostgreSQL 12"
+HOSTNAME="localhost"
 PORT="5432"
 USER="postgres"
 PASSWORD="hoxan9"
@@ -22,7 +22,8 @@ def DatabaseConnection():
     print("engine created")
 
     ### Map the engine to the Database
-    metaData = MetaData(schema=f"{SCHEMA}")
+    metaData = MetaData(bind=engine, schema=f"{SCHEMA}")
+    print(metaData)
     Base = automap_base(bind=engine, metadata=metaData)
     keys = Base.classes.keys()
     print("got base")
