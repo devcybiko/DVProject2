@@ -81,9 +81,7 @@ def get_me_some_matches():
 def get_me_some_players_please():
     global Players, engine
     results = []
-    session = Session(engine)
-    query = session.query("select country_code, hand, count(first_name) as cnt from players group by country_code, hand having hand in ('L', 'R') order by cnt desc, country_code, hand")
-    rows = query.statement.execute().fetchall()
+    rows = engine.execute("select country_code, hand, count(first_name) as cnt from players group by country_code, hand having hand in ('L', 'R') order by cnt desc, country_code, hand")
     for row in rows:
         match = dict(row)
         results.append(match)

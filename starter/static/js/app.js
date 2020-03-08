@@ -45,6 +45,7 @@ function salaryTable() {
 function matchesTable() {
     d3.json("/api/matches").then(rows => { // call the server.py api for salarydata
         console.log(rows);
+        return;
         let tableData = [{
             type: 'table',
             header: {
@@ -72,7 +73,7 @@ function playersTable() {
         let tableData = [{
             type: 'table',
             header: {
-                values: Object.keys(rows[0]),
+                values: [Object.keys(rows[0])],
                 align: "center",
                 line: { width: 1, color: 'black' },
                 fill: { color: "grey" },
