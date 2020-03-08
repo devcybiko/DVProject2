@@ -70,17 +70,20 @@ function matchesTable() {
 function playersTable() {
     d3.json("/api/players").then(rows => { // call the server.py api for salarydata
         console.log(rows);
+        values = sqlToTable(rows);
+        keys = Object.keys(rows[0]).map(key => [key]);
+        console.log(keys);
         let tableData = [{
             type: 'table',
             header: {
-                values: [Object.keys(rows[0])],
+                values: keys,
                 align: "center",
                 line: { width: 1, color: 'black' },
                 fill: { color: "grey" },
                 font: { family: "Arial", size: 12, color: "white" }
             },
             cells: {
-                values: sqlToTable(rows),
+                values: values,
                 align: "center",
                 line: { color: "black", width: 1 },
                 font: { family: "Arial", size: 11, color: ["black"] }
