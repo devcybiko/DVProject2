@@ -20,18 +20,21 @@ function weeklyChart() {
 // this function plots a table of salary data (called from main, above)
 function salaryTable() {
     d3.json("/api/salarydata").then(rows => { // call the server.py api for salarydata
+        console.log(rows);
+        let values = sqlToTable(rows);
+        let keys = [["<b>EXPENSES</b>"], ["<b>Q1</b>"], ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]]
+        console.log(values);
         let tableData = [{
             type: 'table',
             header: {
-                values: [["<b>EXPENSES</b>"], ["<b>Q1</b>"],
-                ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]],
+                values: keys,
                 align: "center",
                 line: { width: 1, color: 'black' },
                 fill: { color: "grey" },
                 font: { family: "Arial", size: 12, color: "white" }
             },
             cells: {
-                values: sqlToTable(rows),
+                values: values,
                 align: "center",
                 line: { color: "black", width: 1 },
                 font: { family: "Arial", size: 11, color: ["black"] }
@@ -69,19 +72,13 @@ function matchesTable() {
 
 function playersTable() {
     d3.json("/api/players").then(rows => { // call the server.py api for salarydata
-        console.log(rows);
-        values = sqlToTable(rows);
-        keys = Object.keys(rows[0]).map(key => [key]);
+        // console.log(rows);
+        let values = sqlToTable(rows).slice(1);
+        let keys = Object.keys(rows[0]).map(key => [key]);
         console.log(keys);
+        console.log(values);
         let tableData = [{
             type: 'table',
-            header: {
-                values: keys,
-                align: "center",
-                line: { width: 1, color: 'black' },
-                fill: { color: "grey" },
-                font: { family: "Arial", size: 12, color: "white" }
-            },
             cells: {
                 values: values,
                 align: "center",
