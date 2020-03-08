@@ -20,7 +20,6 @@ function weeklyChart() {
 // this function plots a table of salary data (called from main, above)
 function salaryTable() {
     d3.json("/api/salarydata").then(rows => { // call the server.py api for salarydata
-        console.log(rows);
         let values = sqlToTable(rows);
         let keys = [["<b>EXPENSES</b>"], ["<b>Q1</b>"], ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]]
         console.log(values);
@@ -73,14 +72,21 @@ function matchesTable() {
 function playersTable() {
     d3.json("/api/players").then(rows => { // call the server.py api for salarydata
         // console.log(rows);
-        let values = sqlToTable(rows).slice(1);
+        let values = sqlToTable(rows);
         let keys = Object.keys(rows[0]).map(key => [key]);
         console.log(keys);
         console.log(values);
         let tableData = [{
             type: 'table',
+            header: {
+                values: keys,
+                align: "center",
+                line: { width: 1, color: 'black' },
+                fill: { color: "grey" },
+                font: { family: "Arial", size: 12, color: "white" }
+            },
             cells: {
-                values: values,
+                values: transpose(rows),
                 align: "center",
                 line: { color: "black", width: 1 },
                 font: { family: "Arial", size: 11, color: ["black"] }
@@ -106,6 +112,12 @@ function sqlToTrace(rows, xname, yname) {
         y.push(row[yname]);
     }
     return { x, y };
+}
+
+//
+// makes all the rows columns, and all the columns rows
+function transpose(array) {
+    return array[0].map((col, i) => array.map(row => row[i]));
 }
 
 // this is a utility function that rearranges the data from a SQL resultSet tabular datas
