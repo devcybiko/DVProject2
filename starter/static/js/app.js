@@ -10,7 +10,7 @@ function main() {
 // this function plots a chart of weekly data (called from main, above)
 function weeklyChart() {
     d3.json("/api/weeklydata").then(rows => { // call the server.py api for weeklydata
-        console.log(rows);
+        // console.log(rows);
         let data = sqlToTrace(rows, "day", "value");
         let options = { margin: { t: 0 } };
         Plotly.newPlot("chartDiv", [data], options); // remember - plotly wants an array of data (one per trace)
@@ -22,7 +22,7 @@ function salaryTable() {
     d3.json("/api/salarydata").then(rows => { // call the server.py api for salarydata
         let values = sqlToTable(rows);
         let keys = [["<b>EXPENSES</b>"], ["<b>Q1</b>"], ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]]
-        console.log(values);
+        // console.log(values);
         let tableData = [{
             type: 'table',
             header: {
@@ -76,8 +76,8 @@ function playersTable() {
         // console.log(rows);
         let values = transpose(sqlToTable(rows).slice(1));
         let keys = Object.keys(rows[0]).map(key => [key]);
-        console.log(keys);
-        console.log(values);
+        // console.log(keys);
+        // console.log(values);
         let tableData = [{
             type: 'table',
             header: {
@@ -119,8 +119,6 @@ function sqlToTrace(rows, xname, yname) {
 //
 // makes all the rows columns, and all the columns rows
 function transpose(array) {
-    console.log(array[0].length);
-    console.log(array.length);
     return array[0].map((col, i) => array.map(row => row[i]));
 }
 
