@@ -72,7 +72,7 @@ function matchesTable() {
 function playersTable() {
     d3.json("/api/players").then(rows => { // call the server.py api for salarydata
         // console.log(rows);
-        let values = sqlToTable(rows);
+        let values = transpose(sqlToTable(rows).slice(1));
         let keys = Object.keys(rows[0]).map(key => [key]);
         console.log(keys);
         console.log(values);
@@ -86,7 +86,7 @@ function playersTable() {
                 font: { family: "Arial", size: 12, color: "white" }
             },
             cells: {
-                values: transpose(rows),
+                values: values,
                 align: "center",
                 line: { color: "black", width: 1 },
                 font: { family: "Arial", size: 11, color: ["black"] }
@@ -117,6 +117,8 @@ function sqlToTrace(rows, xname, yname) {
 //
 // makes all the rows columns, and all the columns rows
 function transpose(array) {
+    console.log(array[0].length);
+    console.log(array.length);
     return array[0].map((col, i) => array.map(row => row[i]));
 }
 
