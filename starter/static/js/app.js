@@ -46,19 +46,21 @@ function salaryTable() {
 
 function matchesTable() {
     d3.json("/api/matches").then(rows => { // call the server.py api for salarydata
-        console.log(rows);
-        return;
+        // console.log(rows);
+        let values = transpose(sqlToTable(rows).slice(1));
+        let keys = Object.keys(rows[0]).map(key => [key]);
+
         let tableData = [{
             type: 'table',
             header: {
-                values: Object.keys(rows[0]),
+                values: keys,
                 align: "center",
                 line: { width: 1, color: 'black' },
                 fill: { color: "grey" },
                 font: { family: "Arial", size: 12, color: "white" }
             },
             cells: {
-                values: sqlToTable(rows),
+                values: values,
                 align: "center",
                 line: { color: "black", width: 1 },
                 font: { family: "Arial", size: 11, color: ["black"] }
