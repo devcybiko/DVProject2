@@ -86,7 +86,7 @@ def get_me_some_age_based_matches():
     results = []
     session = Session(engine)
     query = session.query(Matches)
-    rows = engine.execute(f"select * from matches where {minage} <= winner_age and winner_age <= {maxage}")
+    rows = engine.execute(f"select winner_age, winner_rank, loser_age, loser_id, loser_name from matches where {minage} <= winner_age and winner_age <= {maxage} order by winner_age")
     for row in rows:
         match = dict(row)
         results.append(match)

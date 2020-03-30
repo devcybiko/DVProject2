@@ -4,8 +4,19 @@ function main() {
     matchesTable(); // draw the matches
 }
 
-function matchesTable(minage,maxage) {
-    d3.json(`/api/age_matches?minage=${minage}&maxage=${maxage}`).then(rows => { // call the server.py api for salarydata
+function queryStringParser() {
+    let results = {};
+    let words = window.location.search.substring(1).split('&');
+    for(word of words) {
+        let [key, value]=word.split("=");
+        results[key] = [value];
+    }
+    return results;
+}
+
+function matchesTable() {
+    parameters = queryStringParser();
+    d3.json(`/api/age_matches?minage=${parameters['minage']}&maxage=${parameters['maxage']}`).then(rows => { // call the server.py api for salarydata
         // console.log(rows);
         let values = transpose(sqlToTable(rows).slice(1));
         let keys = Object.keys(rows[0]).map(key => [key]);
