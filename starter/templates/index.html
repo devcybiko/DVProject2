@@ -23,13 +23,7 @@
             </li>
         </ul>
     </nav>
-
-    <form action="/results.html">
-        First Name: <input type='text' name="fname"><br>
-        Second Name: <input type='text' name="fname"><br>
-        Street Name: <input type='text' name="fname"><br>
-        First Name: <input type='text' name="fname"><br>
-    </form>
+    
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -127,6 +121,11 @@
                 <h2>Weekly Payment</h2>
                 <div id="chartDiv" style="width:600px;height:500px;"></div>
                 <h2>FutBall Matches</h2>
+                <form action="/results.html">
+                    min age: <input type='text' name="minage"><br>
+                    max age: <input type='text' name="maxage"><br>
+                    <button type="submit">Search</button>
+                </form>            
                 <div id="matchesDiv" style="width:800px;height:500px;"></div>
                 <h2>Left/Right handed players</h2>
                 <div id="playersDiv" style="width:600px;height:500px;"></div>
