@@ -77,6 +77,18 @@ def get_me_some_matches():
         results.append(match)
     return jsonify(results)
 
+@app.route("/api/age_matches")
+def get_me_some_age_based_matches(minage, maxage):
+    global Matches, engine
+    results = []
+    session = Session(engine)
+    query = session.query(Matches)
+    rows = engine.execute(f"select * from matches where {minage} <= winner_age and winner_age <= {maxage}")
+    for row in rows:
+        match = dict(row)
+        results.append(match)
+    return jsonify(results)
+
 @app.route("/api/players")
 def get_me_some_players_please():
     global Players, engine
@@ -95,18 +107,9 @@ def home():
     message = "Hello, World"
     return render_template('index.html', message=message)
 
-@app.route("/results.html")
-def fusball_results(page):
-    minage = request.args.get('minage')
-    maxage = request.args.get('maxage')
-    results = []
-    rows = engine.execute("select * from matches where {minage} <= winner_age and winner_age <= {maxage}")
-    for row in rows:
-        match = dict(row)
-        results.append(match)
-    return jsonify(results)
-
-    return render_template('results.html')
+@app.route("/results")
+def results(minage, maxage):
+    return render_template('results.html', minage=minage, maxage=maxage)
 
 @app.route("/<page>")
 def any_page(page):
