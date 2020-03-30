@@ -95,6 +95,10 @@ def home():
     message = "Hello, World"
     return render_template('index.html', message=message)
 
+@app.route("/results")
+def any_page(page):
+    return render_template(page)
+
 @app.route("/<page>")
 def any_page(page):
     return render_template(page)
