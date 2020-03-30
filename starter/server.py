@@ -95,9 +95,18 @@ def home():
     message = "Hello, World"
     return render_template('index.html', message=message)
 
-@app.route("/results")
-def any_page(page):
-    return render_template(page)
+@app.route("/results.html")
+def fusball_results(page):
+    minage = request.args.get('minage')
+    maxage = request.args.get('maxage')
+    results = []
+    rows = engine.execute("select * from matches where {minage} <= winner_age and winner_age <= {maxage}")
+    for row in rows:
+        match = dict(row)
+        results.append(match)
+    return jsonify(results)
+
+    return render_template('results.html')
 
 @app.route("/<page>")
 def any_page(page):
