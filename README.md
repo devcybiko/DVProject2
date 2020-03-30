@@ -18,11 +18,6 @@ There are two "transformation" methods that will transform SQL resultsets in JSO
 
 Feel free to `steal like a Banshee` and manipulate this to your needs.
 
-I will be creating examples for each of the 4 Scenarios described in the Project 2 slides:
-
-* A custom “creative” D3.js project (i.e., a nonstandard graph or chart)
-* A combination of web scraping and Leaflet or Plotly
-* A dashboard page with multiple charts that update from the same data
-* A “thick” server that performs multiple manipulations on data in a database prior to visualization (must be approved)
+The `results.html` shows how you might implement passing parameters (ala forms) from your page to the `server.py` and then back to the next page for results
 
 Party on!
