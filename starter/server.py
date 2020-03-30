@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String, create_engine, MetaData
@@ -78,8 +78,11 @@ def get_me_some_matches():
     return jsonify(results)
 
 @app.route("/api/age_matches")
-def get_me_some_age_based_matches(minage, maxage):
+def get_me_some_age_based_matches():
     global Matches, engine
+    print(request.args)
+    minage=request.args['minage']
+    maxage=request.args['maxage']
     results = []
     session = Session(engine)
     query = session.query(Matches)
@@ -108,7 +111,9 @@ def home():
     return render_template('index.html', message=message)
 
 @app.route("/results")
-def results(minage, maxage):
+def results():
+    minage=request.args['minage']
+    maxage=request.args['maxage']
     return render_template('results.html', minage=minage, maxage=maxage)
 
 @app.route("/<page>")
