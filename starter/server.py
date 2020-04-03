@@ -80,7 +80,7 @@ def get_me_some_matches():
 @app.route("/api/age_matches")
 def get_me_some_age_based_matches():
     global Matches, engine
-    print(request.args) // http://localhost:8000/api/age_matches?minage=20&
+    print(request.args) ### http://localhost:5000/api/age_matches?minage=20&maxage=25 
     minage=request.args['minage']
     maxage=request.args['maxage']
     results = []
