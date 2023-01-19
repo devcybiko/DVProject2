@@ -1,2 +1,19 @@
 
 Already up to date.
+[main fe306ab] automatic push
+ 2 files changed, 2 insertions(+)
+ create mode 100644 git-pushall.jnk
+To github.com:devcybiko/DVProject2.git
+   44ec642..fe306ab  main -> main
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   git-pushall.jnk
+
+no changes added to commit (use "git add" and/or "git commit -a")
+...checking DVProject2
+...syncing with github
+Already up to date.
